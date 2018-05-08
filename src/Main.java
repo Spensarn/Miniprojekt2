@@ -31,7 +31,10 @@ public class Main {
 				String line = scan.nextLine();
 				String[] words = line.split("\\{|\\}|\\(|\\)|\\<|\\>|\\*|\\+|\\-|\\/|\\.|\\%|\\&|\\|");
 				for(String word : words){
-					theHash.add(word);
+					if(!keyWords.contains(word)){
+						theHash.add(word);
+					}
+					theHash.wordCount++;
 				}
 			}
 		} catch (FileNotFoundException e) {
