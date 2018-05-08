@@ -17,7 +17,7 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	//Scannar filrader och splita raden vid java syntax BYT VOID TILL HASHTABLECLASS NÄR DEN ÄR FÄRDING
+	//Scannar filrader och splita raden vid java syntax BYT VOID TILL HASHTABLECLASS Nï¿½R DEN ï¿½R Fï¿½RDING
 	public static void readFile(File a){
 		try {
 			@SuppressWarnings("resource")
@@ -39,12 +39,17 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
+	
+	/**Returns a percentage of how closely the files resemble each other*/
 
 	public static int compareHash(HashTableClass a, HashTableClass b){
 		return 0;
 	}
+	
+	/**Prints out the percentage*/
 
 	public static void print(){
+		System.out.println(compareHash());
 
 	}
 }
