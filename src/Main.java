@@ -1,6 +1,9 @@
 import java.io.File;
+<<<<<<< Updated upstream
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+=======
+>>>>>>> Stashed changes
 
 //Metoder: readFiles(File a, File b), compareHash(HashTableClass a, HashTableClass b), print()
 
