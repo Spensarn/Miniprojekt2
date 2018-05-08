@@ -28,7 +28,7 @@ public class HashTableClass {
 			throw new RuntimeException("ERROR" + size);
 		}
 	}
-	
+
 	public void hashFunc(String[] elementsInArray, String array[]) {
 		for(int i = 0; i < elementsInArray.length; i++) {
 			String newElement = elementsInArray[i];
@@ -38,6 +38,11 @@ public class HashTableClass {
 			array[Integer.parseInt(newElement)] = newElement;
 				
 		}
+	}
+	
+	
+	public static void main(String[] args){
+		HashTableClass hash1 = new HashTableClass(3);
 	}
 	
 	
@@ -61,3 +66,17 @@ public class HashTableClass {
 
 
 }
+
+
+
+class Node{
+	public String element;
+	public int frequency;
+	
+	public Node(String theElement){
+		element = theElement;
+	}
+}
+
+
+
