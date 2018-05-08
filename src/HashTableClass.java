@@ -13,41 +13,41 @@ import java.util.LinkedList;
 //Metoder: get(int),size(),put(int, string), hashcode(), contains()
 public class HashTableClass {
 
-	Node[] nodeArray;                  //array av noder, som innehåller "element"; alltså ett ord och "frequency"; alltså hur ofta ordet förekommer
-	int sizeOfArray;                   //storleken av hashtabellen (hur många noder den innehåller)          
+	Node[] nodeArray;                  //array av noder, som innehï¿½ller "element"; alltsï¿½ ett ord och "frequency"; alltsï¿½ hur ofta ordet fï¿½rekommer
+	int sizeOfArray;                   //storleken av hashtabellen (hur mï¿½nga noder den innehï¿½ller)          
 	public int totalWords;             //totala antalet ord i filen
 
 	HashTableClass(int size){          //konstruktorn
 		sizeOfArray = size;
 		nodeArray = new Node[size];    
-		Arrays.fill(nodeArray, null);  //fyller alla noder med null från början
+		Arrays.fill(nodeArray, null);  //fyller alla noder med null frï¿½n bï¿½rjan
 		if(size <= 0) {
-			throw new RuntimeException("ERROR" + size);          //om storleken sätts till 0 eller mindre: error
+			throw new RuntimeException("ERROR" + size);          //om storleken sï¿½tts till 0 eller mindre: error
 		}
 	}
 
 	public void add(String[] elementsInArray) {         //VIKTIG add funktion
-		float loadFactor;                               //antal använda noder/alla noder  
+		float loadFactor;                               //antal anvï¿½nda noder/alla noder  
 		for(int i = 0; i < elementsInArray.length; i++) {
 			String newElement = elementsInArray[i];     
-			int arrayIndex = Integer.parseInt(newElement) % totalWords;     //vår "sparningsalgoritm": elementet (String) till int modulus totala ord blir indexet
-			while(nodeArray[arrayIndex]!= null) {                           //om noden redan är upptagen: kolla nästa nod
-				if(this.contains(newElement)!=null) {                       //om ordet redan finns, öka frekvensen med 1 (i noden)               
+			int arrayIndex = Integer.parseInt(newElement) % totalWords;     //vï¿½r "sparningsalgoritm": elementet (String) till int modulus totala ord blir indexet
+			while(nodeArray[arrayIndex]!= null) {                           //om noden redan ï¿½r upptagen: kolla nï¿½sta nod
+				if(this.contains(newElement)!=null) {                       //om ordet redan finns, ï¿½ka frekvensen med 1 (i noden)               
 					this.contains(newElement).frequency++;                      
 				}
 				arrayIndex++;                      
 			}
 			nodeArray[arrayIndex].element=newElement;                       //spara elementet i noden
-			nodeArray[arrayIndex].frequency++;                              //och öka frekvensen med 1
+			nodeArray[arrayIndex].frequency++;                              //och ï¿½ka frekvensen med 1
 		}
 		int counter=0;
 		for(int i = 0; i<nodeArray.length; i++) {
 			if(nodeArray[i]!=null) {
-				counter++;                                                  //räknar hur många noder som är upptagna
+				counter++;                                                  //rï¿½knar hur mï¿½nga noder som ï¿½r upptagna
 			}
 		}
 		loadFactor = counter/totalWords;                                    //loadFactor: antal upptagna noder/totala antalet noder
-		if(loadFactor >= 0.5) {                                             //om hälften eller fler av noderna är upptagna, dubbla storleken på hashtabellen för att unvika kollision
+		if(loadFactor >= 0.5) {                                             //om hï¿½lften eller fler av noderna ï¿½r upptagna, dubbla storleken pï¿½ hashtabellen fï¿½r att unvika kollision
 			Node[] temp = new Node[nodeArray.length*2]; 
 			System.arraycopy( nodeArray, 0, temp, 0, nodeArray.length);
 			nodeArray = new Node[temp.length];
@@ -64,11 +64,18 @@ public class HashTableClass {
 		return nodeArray[index];
 	}
 
+	
+	public int hashCode(String word) {
+		return Integer.parseInt(word) % totalWords;
+	}
+	
+	
+	
 }
 
-class Node{                                                                 //vår skräddarsydda nod-klass
-	public String element = null;                                           //elementet är ett ord
-	public int frequency = 0;                                               //frekvensen är hur ofta det förekommer
+class Node{                                                                 //vï¿½r skrï¿½ddarsydda nod-klass
+	public String element = null;                                           //elementet ï¿½r ett ord
+	public int frequency = 0;                                               //frekvensen ï¿½r hur ofta det fï¿½rekommer
 
 	public Node(String theElement){
 		element = theElement;
