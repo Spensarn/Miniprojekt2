@@ -27,18 +27,22 @@ public class HashTableClass {
 	}
 
 	public void add(String[] elementsInArray) {         //VIKTIG add funktion
+		totalWords = elementsInArray.length;
 		float loadFactor;                               //antal anv�nda noder/alla noder  
 		for(int i = 0; i < elementsInArray.length; i++) {
 			String newElement = elementsInArray[i];     
-			int arrayIndex = Integer.parseInt(newElement) % totalWords;     //v�r "sparningsalgoritm": elementet (String) till int modulus totala ord blir indexet
+			int arrayIndex = hashCode(newElement);     //v�r "sparningsalgoritm": elementet (String) till int modulus totala ord blir indexet
 			while(nodeArray[arrayIndex]!= null) {                           //om noden redan �r upptagen: kolla n�sta nod
 				if(this.contains(newElement)!=null) {                       //om ordet redan finns, �ka frekvensen med 1 (i noden)               
-					this.contains(newElement).frequency++;                      
-				}
-				arrayIndex++;                      
+					this.contains(newElement).frequency++;  
+					break;
+				} 
+				arrayIndex++;  
 			}
-			nodeArray[arrayIndex].element=newElement;                       //spara elementet i noden
-			nodeArray[arrayIndex].frequency++;                              //och �ka frekvensen med 1
+			if(this.contains(newElement)==null) {
+				nodeArray[arrayIndex]=new Node(newElement);                       //spara elementet i noden
+				nodeArray[arrayIndex].frequency++;                              //och �ka frekvensen med 1
+			}
 		}
 		int counter=0;
 		for(int i = 0; i<nodeArray.length; i++) {
@@ -48,37 +52,81 @@ public class HashTableClass {
 		}
 		loadFactor = counter/totalWords;                                    //loadFactor: antal upptagna noder/totala antalet noder
 		if(loadFactor >= 0.5) {                                             //om h�lften eller fler av noderna �r upptagna, dubbla storleken p� hashtabellen f�r att unvika kollision
-			Node[] temp = new Node[nodeArray.length*2]; 
-			System.arraycopy( nodeArray, 0, temp, 0, nodeArray.length);
-			nodeArray = new Node[temp.length];
-			System.arraycopy(temp, 0, nodeArray, 0, temp.length);
-			sizeOfArray = nodeArray.length;
+			doubleTable();
 		}
 	}
 
 	public Node contains(String element) {                                  //kollar om ett element finns i hashtabellen och returnerar dess nod
-		int index =Integer.parseInt(element) % totalWords;                  //enligt "add" algoritmen
-		while(nodeArray[index].element != element) {
-			index++;
+		int index =hashCode(element);                 						 //enligt "add" algoritmen
+		while(nodeArray[index] != null) {
+			if(nodeArray[index].element != element) {
+				index++;
+			}
+			else {break;}
 		}
 		return nodeArray[index];
 	}
 
-	
+	public void doubleTable() {
+		Node[] temp = new Node[nodeArray.length*2]; 
+		System.arraycopy( nodeArray, 0, temp, 0, nodeArray.length);
+		nodeArray = new Node[temp.length];
+		System.arraycopy(temp, 0, nodeArray, 0, temp.length);
+		sizeOfArray = nodeArray.length;
+	}
+
 	public int hashCode(String word) {
-		return Integer.parseInt(word) % totalWords;
+		char[] array = word.toCharArray();
+		int ascii=0;
+		for(int i=0; i<array.length; i++){
+			ascii = ascii + array[i];
+		}
+		return ascii%sizeOfArray;
+	}
+
+	public void printTable() {
+		System.out.print("Hash elements:  ");
+		for(int i=0; i<nodeArray.length; i++) {
+			if(nodeArray[i]!=null) {
+				System.out.print(nodeArray[i].element + "       ");
+			}
+		}
+		System.out.println();
+		System.out.print("Word frequency: ");
+		for(int j=0; j<nodeArray.length; j++) {
+			if(nodeArray[j]!=null) {
+				System.out.print(nodeArray[j].frequency + "        ");
+			}
+		}
+		System.out.println();
+		System.out.print("Hash code:      ");
+		for(int k=0; k<nodeArray.length; k++) {
+			if(nodeArray[k]!=null) {
+				System.out.print(k+ "        ");
+			}
+		}
 	}
 	
-	
-	
+	public int size() {
+		return sizeOfArray;
+	}
+
+	public static void main(String[] args) {
+		String[] arr = {"Hej", "Spens", "Spens", "Max", "Leif", "Spens", "Erik", "Spens", "Spens", "Spens", "Spens", "Hej", "Hej", "Hej", "Hej", "Hej", "Hej"};
+		HashTableClass hash = new HashTableClass(arr.length*2);
+		hash.add(arr);
+		hash.printTable();
+	}
+
 }
 
 class Node{                                                                 //v�r skr�ddarsydda nod-klass
-	public String element = null;                                           //elementet �r ett ord
+	public String element;                                           //elementet �r ett ord
 	public int frequency = 0;                                               //frekvensen �r hur ofta det f�rekommer
 
 	public Node(String theElement){
 		element = theElement;
+
 	}
 }
 
