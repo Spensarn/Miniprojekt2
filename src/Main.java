@@ -11,7 +11,7 @@ import java.util.Scanner;
 public class Main {
 	public static void main(String[] args) {
 		try {
-			readFile(new FileReader("Test.txt"));
+			readFile(new FileReader("src/TestJava.java"));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
