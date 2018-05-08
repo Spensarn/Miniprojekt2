@@ -13,7 +13,7 @@ import java.util.LinkedList;
 //Metoder: get(int),size(),put(int, string), hashcode(), contains()
 public class HashTableClass {
 	
-	String[] array;
+	Node[] array;
 	int sizeOfArray;
 	int elementInArray = 0;
 	public int wordCount = 0;
@@ -22,17 +22,17 @@ public class HashTableClass {
 		
 	HashTableClass(int size){
 		sizeOfArray = size;
-		array = new String[size];
+		array = new Node[size];
 		Arrays.fill(array, "-1");
 		if(size <= 0) {
 			throw new RuntimeException("ERROR" + size);
 		}
 	}
 
-	public void hashFunc(String[] elementsInArray, String array[]) {
+	public void hashFunc(String[] elementsInArray, Node array[]) {
 		for(int i = 0; i < elementsInArray.length; i++) {
 			String newElement = elementsInArray[i];
-				while(elementsInArray[i] == "-1") {
+				while(elementsInArray[i] == null) {
 					
 				}
 			array[Integer.parseInt(newElement)] = newElement;
@@ -56,10 +56,14 @@ public class HashTableClass {
 			hashCodeIndex %= sizeOfArray;
 		}
 			return null;
-	
 	}
+	
+			
+	
+			
+	
 
-	public void contains() {
+	public Node contains(String element) {
 		
 	}
 
