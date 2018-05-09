@@ -10,48 +10,59 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		try {
-			readFile(new FileReader("Test.txt"));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-//		HashTableClass keyWords = new HashTableClass();
-//		try {
-//			Scanner scan = new Scanner(new File("KeyWords.txt"));
-//			while(scan.hasNext()){
-//				String keyword = scan.next();
-//				keyWords.add(keyword);
-//			}
-//		} catch (FileNotFoundException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		String[] arrayA = {"hej", "Erik", "Leif", "korv"};
+		String[] arrayB = {"hej", "korv"};
+
+		HashTableClass aTable = new HashTableClass(arrayA.length * 4);
+		HashTableClass bTable = new HashTableClass(arrayB.length * 3);
+
+		aTable.add(arrayA);
+		bTable.add(arrayB);
+
+		System.out.println(compareHash(aTable, bTable));
+
+		//		try {
+		//			readFile(new FileReader("Test.txt"));
+		//		} catch (FileNotFoundException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
+
+		//		HashTableClass keyWords = new HashTableClass();
+		//		try {
+		//			Scanner scan = new Scanner(new File("KeyWords.txt"));
+		//			while(scan.hasNext()){
+		//				String keyword = scan.next();
+		//				keyWords.add(keyword);
+		//			}
+		//		} catch (FileNotFoundException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
 	}
 	//Scannar filrader och splita raden vid java syntax BYT VOID TILL HASHTABLECLASS N�R DEN �R F�RDING
 	public static void readFile(FileReader a){
 		int wordCount = 0;
 		String line = "";
 		try {
-			
+
 			@SuppressWarnings("resource")
 			BufferedReader read = new BufferedReader(a);
 			while(read.ready()){
-				
-				 line += read.readLine();
-				
+
+				line += read.readLine();
+
 			}
-			
+
 			System.out.println(line);
-			
+
 			//String[] words = line.split("\\{|\\}|\\(|\\)|\\<|\\>|\\*|\\+|\\-|\\/|\\.|\\%|\\&|\t|\\s+|\\;|\\|");
 			String[] words = line.split("\\W+");
 			for(String word : words){
 				word.trim();
 				wordCount++;					
 			}
-			
+
 			System.out.println(Arrays.toString(words));
 			System.out.println(wordCount);
 		} catch (IOException e) {
@@ -59,13 +70,31 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**Returns a percentage of how closely the files resemble each other*/
 
 	public static int compareHash(HashTableClass a, HashTableClass b){
-		return 0;
+		int counter = 0;
+		int i = 0;
+
+		System.out.println(a.size());
+		while(a.nodeArray[i] != null){
+			
+			//for(int i=0; i<a.size(); i++){
+				System.out.println(a.nodeArray[i].element);
+				if(a.nodeArray[i].element != null){
+					System.out.println("1");
+					if(b.contains(a.nodeArray[i].element) != null){
+						System.out.println("2");
+						counter++;
+					}
+				}
+			//}
+				i++;
+		}
+		return counter;
 	}
-	
+
 	/**Prints out the percentage*/
 
 	public static void print(){
