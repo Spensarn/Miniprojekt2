@@ -100,11 +100,18 @@ public class HashTableClass {
 		return sizeOfArray;
 	}
 
+	public void iterator() {
+		
+	}
+	
+	
 	public static void main(String[] args) {
 		String[] arr = {"Hej", "Spens", "Spens", "Max", "Leif", "Spens", "Erik", "Spens", "Spens", "Spens", "Spens", "Hej", "Hej", "Hej", "Hej", "Hej", "Hejh", "Dejh", "Jejh", "Sejh", "Kej", "Mej", "jeM"};
 		HashTableClass hash = new HashTableClass(arr.length*3);
 		hash.add(arr);
 		hash.printTable();
+		
+		
 	}
 
 }
