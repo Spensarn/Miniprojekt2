@@ -4,6 +4,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.LinkedList;
 
 
@@ -18,8 +19,8 @@ public class HashTableClass {
 	public int totalWords;             //totala antalet ord i filen
 
 	HashTableClass(int size){          //konstruktorn
-		sizeOfArray = size;
-		nodeArray = new Node[size];    
+		sizeOfArray = size*3;
+		nodeArray = new Node[sizeOfArray];    
 		Arrays.fill(nodeArray, null);  //fyller alla noder med null fr�n b�rjan
 		if(size <= 0) {
 			throw new RuntimeException("ERROR" + size);          //om storleken s�tts till 0 eller mindre: error
@@ -33,16 +34,18 @@ public class HashTableClass {
 			String newElement = elementsInArray[i];     
 			int arrayIndex = hashCode(newElement);     //v�r "sparningsalgoritm": elementet (String) till int modulus totala ord blir indexet
 			while(nodeArray[arrayIndex]!= null) {                           //om noden redan �r upptagen: kolla n�sta nod
-				if(this.contains(newElement)!=null) {                       //om ordet redan finns, �ka frekvensen med 1 (i noden)               
-					this.contains(newElement).frequency++;  
+				if(contains(newElement)!=null) {                       //om ordet redan finns, �ka frekvensen med 1 (i noden)               
+					contains(newElement).frequency++;  
 					break;
 				} 
+				System.out.println("Collision at: " + arrayIndex + ", regarding element: " + newElement);
 				arrayIndex++;  
 			}
-			if(this.contains(newElement)==null) {
-				nodeArray[arrayIndex]=new Node(newElement);                       //spara elementet i noden
-				nodeArray[arrayIndex].frequency++;                              //och �ka frekvensen med 1
+			if(nodeArray[arrayIndex]==null) {
+			nodeArray[arrayIndex]=new Node(newElement);                       //spara elementet i noden
+			nodeArray[arrayIndex].frequency++;                                //och �ka frekvensen med 1
 			}
+
 		}
 		int counter=0;
 		for(int i = 0; i<nodeArray.length; i++) {
@@ -68,7 +71,7 @@ public class HashTableClass {
 	}
 
 	public void doubleTable() {
-		Node[] temp = new Node[nodeArray.length*2]; 
+		Node[] temp = new Node[nodeArray.length*3]; 
 		System.arraycopy( nodeArray, 0, temp, 0, nodeArray.length);
 		nodeArray = new Node[temp.length];
 		System.arraycopy(temp, 0, nodeArray, 0, temp.length);
@@ -85,38 +88,19 @@ public class HashTableClass {
 	}
 
 	public void printTable() {
-		System.out.print("Hash elements:  ");
+		System.out.println("Elements  "   + "Frequency   " + "HashCode   ");
 		for(int i=0; i<nodeArray.length; i++) {
 			if(nodeArray[i]!=null) {
-				System.out.print(nodeArray[i].element + "       ");
-			}
-		}
-		System.out.println();
-		System.out.print("Word frequency: ");
-		for(int j=0; j<nodeArray.length; j++) {
-			if(nodeArray[j]!=null) {
-				System.out.print(nodeArray[j].frequency + "        ");
-			}
-		}
-		System.out.println();
-		System.out.print("Hash code:      ");
-		for(int k=0; k<nodeArray.length; k++) {
-			if(nodeArray[k]!=null) {
-				System.out.print(k+ "        ");
+				System.out.println(nodeArray[i].element + "       " + nodeArray[i].frequency+ "            " +  i);
 			}
 		}
 	}
-	
+
 	public int size() {
 		return sizeOfArray;
 	}
 
-	public static void main(String[] args) {
-		String[] arr = {"Hej", "Spens", "Spens", "Max", "Leif", "Spens", "Erik", "Spens", "Spens", "Spens", "Spens", "Hej", "Hej", "Hej", "Hej", "Hej", "Hej"};
-		HashTableClass hash = new HashTableClass(arr.length*2);
-		hash.add(arr);
-		hash.printTable();
-	}
+	
 
 }
 
