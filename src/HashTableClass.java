@@ -19,8 +19,8 @@ public class HashTableClass {
 	public int totalWords;             //totala antalet ord i filen
 
 	HashTableClass(int size){          //konstruktorn
-		sizeOfArray = size;
-		nodeArray = new Node[size];    
+		sizeOfArray = size*3;
+		nodeArray = new Node[sizeOfArray];    
 		Arrays.fill(nodeArray, null);  //fyller alla noder med null fr�n b�rjan
 		if(size <= 0) {
 			throw new RuntimeException("ERROR" + size);          //om storleken s�tts till 0 eller mindre: error
@@ -100,12 +100,7 @@ public class HashTableClass {
 		return sizeOfArray;
 	}
 
-	public static void main(String[] args) {
-		String[] arr = {"Hej", "Spens", "Spens", "Max", "Leif", "Spens", "Erik", "Spens", "Spens", "Spens", "Spens", "Hej", "Hej", "Hej", "Hej", "Hej", "Hejh", "Dejh", "Jejh", "Sejh", "Kej", "Mej", "jeM"};
-		HashTableClass hash = new HashTableClass(arr.length*3);
-		hash.add(arr);
-		hash.printTable();
-	}
+	
 
 }
 
