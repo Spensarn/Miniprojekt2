@@ -10,8 +10,8 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		String[] arrayA = {"hej", "Leif", "Erik", "korv"};
-		String[] arrayB = {"hej", "korv"};
+		String[] arrayA = {"hi", "this", "is", "a", "long", "text"};
+		String[] arrayB = {"hi", "this", "is", "a", "much", "longer", "text", "thanks"};
 
 		HashTableClass aTable = new HashTableClass(arrayA.length);
 		HashTableClass bTable = new HashTableClass(arrayB.length);
@@ -73,25 +73,34 @@ public class Main {
 
 	/**Returns a percentage of how closely the files resemble each other*/
 
-	public static int compareHash(HashTableClass a, HashTableClass b){
-		int counter = 0;
+	public static double compareHash(HashTableClass a, HashTableClass b){
+		double counterSameWords = 0;
+		double counterTotalWords = (a.size() + b.size()) / 3;
+				
 		String temp = "";
+		
+		
 		for(int i=0; i<a.size(); i++){
 			if(a.nodeArray[i]!=null){
 				temp = a.nodeArray[i].element;
 				if(b.contains(temp) != null){
-					counter++;
+					counterSameWords++;
 				}
 			}
 		}
+		
+		System.out.println("Same words: " + counterSameWords);
+		System.out.println("Total words: " + counterTotalWords);
 
-		return counter;
+		double ret = (double) Math.round((counterSameWords / counterTotalWords * 100) * 10) / 10;
+		
+		return ret;
 	}
 
 	/**Prints out the percentage*/
 
 	public static void print(){
-		//System.out.println(compareHash());
+		//sSystem.out.println(compareHash());
 
 	}
 }
