@@ -10,11 +10,11 @@ import java.util.Scanner;
 
 public class Main {
 	public static void main(String[] args) {
-		String[] arrayA = {"hej", "Erik", "Leif", "korv"};
+		String[] arrayA = {"hej", "Leif", "Erik", "korv"};
 		String[] arrayB = {"hej", "korv"};
 
-		HashTableClass aTable = new HashTableClass(arrayA.length * 4);
-		HashTableClass bTable = new HashTableClass(arrayB.length * 3);
+		HashTableClass aTable = new HashTableClass(arrayA.length);
+		HashTableClass bTable = new HashTableClass(arrayB.length);
 
 		aTable.add(arrayA);
 		bTable.add(arrayB);
@@ -75,23 +75,16 @@ public class Main {
 
 	public static int compareHash(HashTableClass a, HashTableClass b){
 		int counter = 0;
-		int i = 0;
-
-		System.out.println(a.size());
-		while(a.nodeArray[i] != null){
-			
-			//for(int i=0; i<a.size(); i++){
-				System.out.println(a.nodeArray[i].element);
-				if(a.nodeArray[i].element != null){
-					System.out.println("1");
-					if(b.contains(a.nodeArray[i].element) != null){
-						System.out.println("2");
-						counter++;
-					}
+		String temp = "";
+		for(int i=0; i<a.size(); i++){
+			if(a.nodeArray[i]!=null){
+				temp = a.nodeArray[i].element;
+				if(b.contains(temp) != null){
+					counter++;
 				}
-			//}
-				i++;
+			}
 		}
+
 		return counter;
 	}
 
