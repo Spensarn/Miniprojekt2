@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
 		String[] arrayA = {"hi", "this", "is", "a", "long", "text"};
-		String[] arrayB = {"hi", "this", "is", "a", "much", "longer", "text", "thanks"};
+		String[] arrayB = {"hi", "this", "is", "a", "much", "longer", "text", "thanks"};	//9 unique words, 5 words are the same
 
 		HashTableClass aTable = new HashTableClass(arrayA.length);
 		HashTableClass bTable = new HashTableClass(arrayB.length);
@@ -17,14 +17,14 @@ public class Main {
 		aTable.add(arrayA);
 		bTable.add(arrayB);
 		
-		System.out.println("The reseblence between the two String arrays: " + compareHash(aTable, bTable) + "%");
+		System.out.println("The resemblence between the two Files: " + compareHash(aTable, bTable) + "%");
 
 		
 		System.out.println("=============================================");
 		HashTableClass Table1 = readFile("Test.txt");
 		HashTableClass Table2 = readFile("Test.txt");
 		
-		System.out.println("The reseblence between the two String arrays: " + compareHash(Table1, Table2) + "%");
+		System.out.println("The resemblence between the two Files : " + compareHash(Table1, Table2) + "%");
 	}
 	//Creates HashTableClass of identifiers from file fil(NEEDS MORE TESTING) 
 	public static HashTableClass readFile(String fil){
@@ -64,7 +64,7 @@ public class Main {
 				i++;
 			}				
 		}
-		System.out.println(Arrays.toString(idWords));
+
 		HashTableClass idWordsHash = new HashTableClass(idCount);
 		idWordsHash.add(idWords);
 		return idWordsHash;
@@ -93,25 +93,24 @@ public class Main {
 	/**Returns a percentage of how closely the files resemble each other*/
 
 	public static double compareHash(HashTableClass a, HashTableClass b){
-		double counterSameWords = 0;
 		double counterTotalWords = (a.size() + b.size()) / 3;
-				
-		String temp = "";
+		double ret = 0;
 		
+		int identifiers = 0;
 		
-		for(int i=0; i<a.size(); i++){
-			if(a.nodeArray[i]!=null){
-				temp = a.nodeArray[i].element;
-				if(b.contains(temp) != null){
-					counterSameWords++;
-				}
+		for(int i = 0; i < a.size(); i++){
+			if(a.nodeArray[i] != null){
+				identifiers++;
 			}
 		}
 		
-		System.out.println("Same words: " + counterSameWords);
-		System.out.println("Total words: " + counterTotalWords);
+		for(int j = 0; j < b.size(); j++){
+			if(b.nodeArray[j] != null && a.contains(b.nodeArray[j].element) == null){
+				identifiers++;
+			}			
+		}
 
-		double ret = (double) Math.round((counterSameWords / counterTotalWords * 100) * 10) / 10;
+		ret = (double) Math.round(((counterTotalWords - identifiers) / identifiers * 100) * 10) / 10;
 		
 		return ret;
 	}
