@@ -8,22 +8,9 @@ import java.util.Arrays;
 
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
-		String[] arrayA = {"hi", "this", "is", "a", "long", "text"};
-		String[] arrayB = {"hi", "this", "is", "a", "much", "longer", "text", "thanks"};	//9 unique words, 5 words are the same
-
-		HashTableClass aTable = new HashTableClass(arrayA.length);
-		HashTableClass bTable = new HashTableClass(arrayB.length);
-
-		aTable.add(arrayA);
-		bTable.add(arrayB);
-		
-		System.out.println("The resemblence between the two Files: " + compareHash(aTable, bTable) + "%");
-
-		
-		System.out.println("=============================================");
 		HashTableClass Table1 = readFile("Test.txt");
 		HashTableClass Table2 = readFile("Test.txt");
-		
+
 		System.out.println("The resemblence between the two Files : " + compareHash(Table1, Table2) + "%");
 	}
 	//Creates HashTableClass of identifiers from file fil(NEEDS MORE TESTING) 
@@ -35,7 +22,7 @@ public class Main {
 			e1.printStackTrace();
 		}
 		HashTableClass keyWords = keyWords();
-		
+
 		int idCount = 0;
 		String line = "";
 		try {
@@ -78,32 +65,32 @@ public class Main {
 				line += read.readLine();
 			}
 			read.close();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		String[] keyWords = line.split(" ");
-		
+
 		HashTableClass keyWordHash = new HashTableClass(keyWords.length);
 		keyWordHash.add(keyWords);
-		
+
 		return keyWordHash;
 	}
+	
 	/**Returns a percentage of how closely the files resemble each other*/
-
 	public static double compareHash(HashTableClass a, HashTableClass b){
 		double counterTotalWords = (a.size() + b.size()) / 3;
 		double ret = 0;
-		
+
 		int identifiers = 0;
-		
+
 		for(int i = 0; i < a.size(); i++){
 			if(a.nodeArray[i] != null){
 				identifiers++;
 			}
 		}
-		
+
 		for(int j = 0; j < b.size(); j++){
 			if(b.nodeArray[j] != null && a.contains(b.nodeArray[j].element) == null){
 				identifiers++;
@@ -111,20 +98,12 @@ public class Main {
 		}
 
 		ret = (double) Math.round(((counterTotalWords - identifiers) / identifiers * 100) * 10) / 10;
-		
+
 		return ret;
 	}
-	
+
 	//Check if String is a number
-	public static boolean isNumeric(String str)
-	{
-	  return str.matches("-?\\d+(\\.\\d+)?"); 
-	}
-
-	/**Prints out the percentage*/
-
-	public static void print(){
-		//sSystem.out.println(compareHash());
-
+	public static boolean isNumeric(String str){
+		return str.matches("-?\\d+(\\.\\d+)?"); 
 	}
 }
