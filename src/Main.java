@@ -9,7 +9,10 @@ import java.util.Arrays;
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
 		HashTableClass Table1 = readFile("Test.txt");
-		HashTableClass Table2 = readFile("Test.txt");
+		HashTableClass Table2 = readFile("Test2.txt");
+		
+		//Table1.printTable();
+		//Table2.printTable();
 
 		System.out.println("The resemblence between the two Files : " + compareHash(Table1, Table2) + "%");
 	}
@@ -80,24 +83,30 @@ public class Main {
 	
 	/**Returns a percentage of how closely the files resemble each other*/
 	public static double compareHash(HashTableClass a, HashTableClass b){
-		double counterTotalWords = (a.size() + b.size()) / 3;
-		double ret = 0;
+		double counterTotalWords = (a.size() + b.size()) / 3; //Total nodes divided by three because of the add-function
+		double ret = 0; //Final return-value
 
-		int identifiers = 0;
+		int identifiers = 0; //Number of unique identifiers of the total number of identifiers in the two files
 
+		//
 		for(int i = 0; i < a.size(); i++){
-			if(a.nodeArray[i] != null){
+			if(a.nodeArray[i] != null && b.contains(a.nodeArray[i].element) == null){
+				System.out.println("a: "+ a.nodeArray[i].element);
 				identifiers++;
 			}
 		}
 
 		for(int j = 0; j < b.size(); j++){
 			if(b.nodeArray[j] != null && a.contains(b.nodeArray[j].element) == null){
+				System.out.println("b: "+ b.nodeArray[j].element);
 				identifiers++;
 			}			
 		}
+		
+		System.out.println("Total words in file: " + counterTotalWords);
+		System.out.println("Unique words in file: " + identifiers);
 
-		ret = (double) Math.round(((counterTotalWords - identifiers) / identifiers * 100) * 10) / 10;
+		ret = (double) Math.round(((counterTotalWords - identifiers) / counterTotalWords * 100) * 10) / 10;
 
 		return ret;
 	}
