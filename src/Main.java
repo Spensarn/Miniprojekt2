@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 //Metoder: readFiles(File a, File b), compareHash(HashTableClass a, HashTableClass b), print()
+import java.util.Arrays;
 
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
@@ -15,22 +16,26 @@ public class Main {
 
 		aTable.add(arrayA);
 		bTable.add(arrayB);
+		
+		System.out.println("The reseblence between the two String arrays: " + compareHash(aTable, bTable) + "%");
 
-		System.out.println(compareHash(aTable, bTable));
-
+		
 		System.out.println("=============================================");
-		readFile("Miniprojekt2/Test.txt");
-
+		HashTableClass Table1 = readFile("Test.txt");
+		HashTableClass Table2 = readFile("Test.txt");
+		
+		System.out.println("The reseblence between the two String arrays: " + compareHash(Table1, Table2) + "%");
 	}
 	//Creates HashTableClass of identifiers from file fil(NEEDS MORE TESTING) 
 	public static HashTableClass readFile(String fil){
 		FileReader a = null;
-		try {
+		try{
 			a = new FileReader(new File(fil));
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
 		HashTableClass keyWords = keyWords();
+		
 		int idCount = 0;
 		String line = "";
 		try {
@@ -38,17 +43,17 @@ public class Main {
 			while(read.ready()){
 				line += read.readLine();
 			}
+			line.trim();
 			read.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
-		System.out.println(line);
-
 		String[] words = line.split("\\W+"); //Split by symbols (whitespace, {, ], etc.)
 		for(String word : words){//Loop counting how many words are identifiers
+			word.trim();
 			if(keyWords.contains(word)==null && !isNumeric(word)){
-				idCount++;	
+				idCount++;
 			}				
 		}
 		String[] idWords = new String [idCount];
@@ -59,6 +64,7 @@ public class Main {
 				i++;
 			}				
 		}
+		System.out.println(Arrays.toString(idWords));
 		HashTableClass idWordsHash = new HashTableClass(idCount);
 		idWordsHash.add(idWords);
 		return idWordsHash;
@@ -67,16 +73,18 @@ public class Main {
 	private static HashTableClass keyWords() {
 		String line = "";
 		try {
-			BufferedReader read = new BufferedReader(new FileReader("Miniprojekt2/KeyWords.txt"));
+			BufferedReader read = new BufferedReader(new FileReader("KeyWords.txt"));
 			while(read.ready()){
 				line += read.readLine();
 			}
 			read.close();
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
 		String[] keyWords = line.split(" ");
+		
 		HashTableClass keyWordHash = new HashTableClass(keyWords.length);
 		keyWordHash.add(keyWords);
 		

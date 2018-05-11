@@ -28,7 +28,7 @@ public class HashTableClass {
 	}
 
 	public void add(String[] elementsInArray) {         //VIKTIG add funktion
-		totalWords = elementsInArray.length;
+		totalWords = elementsInArray.length;				//totalWords = alla element/strängar som finns i filen
 		float loadFactor;                               //antal anv�nda noder/alla noder  
 		for(int i = 0; i < elementsInArray.length; i++) {
 			String newElement = elementsInArray[i];     
@@ -66,13 +66,15 @@ public class HashTableClass {
 	public Node contains(String element) {                                  //kollar om ett element finns i hashtabellen och returnerar dess nod
 		int index =hashCode(element);                 						 //enligt "add" algoritmen
 		while(nodeArray[index] != null) {
-			if(nodeArray[index].element != element) {
+			if(!nodeArray[index].element.equals(element)) {
 				index++;
 				if(index>=sizeOfArray){
 					index%=sizeOfArray;
 				}
+				
 			}
 			else {
+				
 				break;
 				}
 		}
@@ -109,7 +111,6 @@ public class HashTableClass {
 		return sizeOfArray;
 	}
 
-	
 
 }
 

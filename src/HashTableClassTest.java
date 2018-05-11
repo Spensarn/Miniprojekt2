@@ -7,7 +7,7 @@ public class HashTableClassTest {
 	@Test
 	public void addTest() {
 		String[] array = {"Hej", "Jacob", "Leif", "Max", "Erik", "Hej"};
-		HashTableClass hash = new HashTableClass(array.length*3);
+		HashTableClass hash = new HashTableClass(array.length);
 		hash.add(array);
 		assertEquals("Tests if the size if the hashtable is correct ",18,hash.size());
 		assertEquals("Check if the hashtable contains the the element Hej", "Hej", hash.contains("Hej").element);
@@ -25,12 +25,13 @@ public class HashTableClassTest {
 	}
 	@Test
 	public void containsTest() {
-		String[] array = {"Hej", "Spens", "Spens", "Max", "Leif", "Spens", "Erik", "Spens", "Spens", "Spens", "Spens", "Hej", "Hej", "Hej", "Hej", "Hej", "Hejh", "Dejh", "Jejh", "Sejh", "Kej", "Mej", "jeM"};
-		HashTableClass hash = new HashTableClass(array.length); 
-		hash.add(array);
-		assertEquals("Check if the hashtable returns null when we use the contains method on a String that does not exist in our hashtable ", null, hash.contains("H233232323ej"));
-		assertEquals("Check if we",true,hash.contains("Hej").element.equals("Hej"));
-		
+		String[] array2 = {"Hej", "Spens", "Spens", "Max", "Leif", "Spens", "Erik", "Spens", "Spens", "Spens", "Spens", "Hej", "Hej", "Hej", "Hej", "Hej", "Hejh", "Dejh", "Jejh", "Sejh", "Kej", "Mej", "jeM"};
+		String[] array1 = {"Hej", "Hej"};
+		HashTableClass hash1 = new HashTableClass(array2.length + array1.length); 
+		hash1.add(array2);
+		hash1.add(array1);
+		assertEquals("Check if the hashtable returns null when we use the contains method on a String that does not exist in our hashtable ", null, hash1.contains("H233232323ej"));
+		assertEquals("Check if the equals() method returns true when we compare with an element that is in the hashtable ",true,hash1.contains("Hej").element.equals("Hej"));
 	}
 	
 
