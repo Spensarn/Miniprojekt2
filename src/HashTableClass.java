@@ -38,7 +38,7 @@ public class HashTableClass {
 					contains(newElement).frequency++;  
 					break;
 				} 
-				System.out.println("Collision at: " + arrayIndex + ", regarding element: " + newElement);
+				//System.out.println("Collision at: " + arrayIndex + ", regarding element: " + newElement);
 				arrayIndex++;  
 				if(arrayIndex>=sizeOfArray){
 					arrayIndex%=sizeOfArray;
