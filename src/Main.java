@@ -1,22 +1,25 @@
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 //Metoder: readFiles(File a, File b), compareHash(HashTableClass a, HashTableClass b), print()
-import java.util.Arrays;
 
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
-		HashTableClass Table1 = readFile("Test.txt");
-		HashTableClass Table2 = readFile("Test2.txt");
-		
-		//Table1.printTable();
-		//Table2.printTable();
-
-		System.out.println("The resemblence between the two Files : " + compareHash(Table1, Table2) + "%");
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI frame = new GUI();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	//Creates HashTableClass of identifiers from file fil(NEEDS MORE TESTING) 
+	//Creates HashTableClass of identifiers from file fil
 	public static HashTableClass readFile(String fil){
 		FileReader a = null;
 		try{
