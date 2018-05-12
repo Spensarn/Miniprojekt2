@@ -1,104 +1,121 @@
+import java.awt.EventQueue;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.Reader;
-import java.util.Arrays;
-import java.util.Scanner;
 //Metoder: readFiles(File a, File b), compareHash(HashTableClass a, HashTableClass b), print()
 
 public class Main {
-	public static void main(String[] args) {
-		String[] arrayA = {"hej", "Erik", "Leif", "korv"};
-		String[] arrayB = {"hej", "korv"};
-
-		HashTableClass aTable = new HashTableClass(arrayA.length * 4);
-		HashTableClass bTable = new HashTableClass(arrayB.length * 3);
-
-		aTable.add(arrayA);
-		bTable.add(arrayB);
-
-		System.out.println(compareHash(aTable, bTable));
-
-		//		try {
-		//			readFile(new FileReader("Test.txt"));
-		//		} catch (FileNotFoundException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
-
-		//		HashTableClass keyWords = new HashTableClass();
-		//		try {
-		//			Scanner scan = new Scanner(new File("KeyWords.txt"));
-		//			while(scan.hasNext()){
-		//				String keyword = scan.next();
-		//				keyWords.add(keyword);
-		//			}
-		//		} catch (FileNotFoundException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
+	public static void main(String[] args) throws FileNotFoundException {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI frame = new GUI();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
-	//Scannar filrader och splita raden vid java syntax BYT VOID TILL HASHTABLECLASS N�R DEN �R F�RDING
-	public static void readFile(FileReader a){
-		int wordCount = 0;
+	//Creates HashTableClass of identifiers from file fil
+	public static HashTableClass readFile(String fil){
+		FileReader a = null;
+		try{
+			a = new FileReader(new File(fil));
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+		HashTableClass keyWords = keyWords();
+
+		int idCount = 0;
 		String line = "";
 		try {
-
-			@SuppressWarnings("resource")
 			BufferedReader read = new BufferedReader(a);
 			while(read.ready()){
-
 				line += read.readLine();
-
 			}
-
-			System.out.println(line);
-
-			//String[] words = line.split("\\{|\\}|\\(|\\)|\\<|\\>|\\*|\\+|\\-|\\/|\\.|\\%|\\&|\t|\\s+|\\;|\\|");
-			String[] words = line.split("\\W+");
-			for(String word : words){
-				word.trim();
-				wordCount++;					
-			}
-
-			System.out.println(Arrays.toString(words));
-			System.out.println(wordCount);
+			line.trim();
+			read.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
 
-	/**Returns a percentage of how closely the files resemble each other*/
-
-	public static int compareHash(HashTableClass a, HashTableClass b){
-		int counter = 0;
-		int i = 0;
-
-		System.out.println(a.size());
-		while(a.nodeArray[i] != null){
-			
-			//for(int i=0; i<a.size(); i++){
-				System.out.println(a.nodeArray[i].element);
-				if(a.nodeArray[i].element != null){
-					System.out.println("1");
-					if(b.contains(a.nodeArray[i].element) != null){
-						System.out.println("2");
-						counter++;
-					}
-				}
-			//}
-				i++;
+		String[] words = line.split("\\W+"); //Split by symbols (whitespace, {, ], etc.)
+		for(String word : words){//Loop counting how many words are identifiers
+			word.trim();
+			if(keyWords.contains(word)==null && !isNumeric(word)){
+				idCount++;
+			}				
 		}
-		return counter;
+		String[] idWords = new String [idCount];
+		int i = 0;
+		for(String word : words){//Loop adding identifiers to array
+			if(keyWords.contains(word)==null && !isNumeric(word)){
+				idWords[i] = word;
+				i++;
+			}				
+		}
+
+		HashTableClass idWordsHash = new HashTableClass(idCount);
+		idWordsHash.add(idWords);
+		return idWordsHash;
+	}
+	//Create a HashTableClass of KeyWords.txt
+	private static HashTableClass keyWords() {
+		String line = "";
+		try {
+			BufferedReader read = new BufferedReader(new FileReader("KeyWords.txt"));
+			while(read.ready()){
+				line += read.readLine();
+			}
+			read.close();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		String[] keyWords = line.split(" ");
+
+		HashTableClass keyWordHash = new HashTableClass(keyWords.length);
+		keyWordHash.add(keyWords);
+
+		return keyWordHash;
+	}
+	
+	/**Returns a percentage of how closely the files resemble each other*/
+	public static double compareHash(HashTableClass a, HashTableClass b){
+		double counterTotalWords = (a.size() + b.size()) / 3; //Total nodes divided by three because of the add-function
+		double ret = 0; //Final return-value
+
+		int identifiers = 0; //Number of unique identifiers of the total number of identifiers in the two files
+
+		//
+		for(int i = 0; i < a.size(); i++){
+			if(a.nodeArray[i] != null && b.contains(a.nodeArray[i].element) == null){
+				System.out.println("a: "+ a.nodeArray[i].element);
+				identifiers++;
+			}
+		}
+
+		for(int j = 0; j < b.size(); j++){
+			if(b.nodeArray[j] != null && a.contains(b.nodeArray[j].element) == null){
+				System.out.println("b: "+ b.nodeArray[j].element);
+				identifiers++;
+			}			
+		}
+		
+		System.out.println("Total words in file: " + counterTotalWords);
+		System.out.println("Unique words in file: " + identifiers);
+
+		ret = (double) Math.round(((counterTotalWords - identifiers) / counterTotalWords * 100) * 10) / 10;
+
+		return ret;
 	}
 
-	/**Prints out the percentage*/
-
-	public static void print(){
-		//System.out.println(compareHash());
-
+	//Check if String is a number
+	public static boolean isNumeric(String str){
+		return str.matches("-?\\d+(\\.\\d+)?"); 
 	}
 }

@@ -28,7 +28,7 @@ public class HashTableClass {
 	}
 
 	public void add(String[] elementsInArray) {         //VIKTIG add funktion
-		totalWords = elementsInArray.length;
+		totalWords = elementsInArray.length;				//totalWords = alla element/strängar som finns i filen
 		float loadFactor;                               //antal anv�nda noder/alla noder  
 		for(int i = 0; i < elementsInArray.length; i++) {
 			String newElement = elementsInArray[i];     
@@ -38,8 +38,11 @@ public class HashTableClass {
 					contains(newElement).frequency++;  
 					break;
 				} 
-				System.out.println("Collision at: " + arrayIndex + ", regarding element: " + newElement);
+				//System.out.println("Collision at: " + arrayIndex + ", regarding element: " + newElement);
 				arrayIndex++;  
+				if(arrayIndex>=sizeOfArray){
+					arrayIndex%=sizeOfArray;
+				}
 			}
 			if(nodeArray[arrayIndex]==null) {
 			nodeArray[arrayIndex]=new Node(newElement);                       //spara elementet i noden
@@ -47,7 +50,7 @@ public class HashTableClass {
 			}
 
 		}
-		int counter=0;
+		/*int counter=0;
 		for(int i = 0; i<nodeArray.length; i++) {
 			if(nodeArray[i]!=null) {
 				counter++;                                                  //r�knar hur m�nga noder som �r upptagna
@@ -57,15 +60,23 @@ public class HashTableClass {
 		if(loadFactor >= 0.5) {                                             //om h�lften eller fler av noderna �r upptagna, dubbla storleken p� hashtabellen f�r att unvika kollision
 			doubleTable();
 		}
+		*/
 	}
 
 	public Node contains(String element) {                                  //kollar om ett element finns i hashtabellen och returnerar dess nod
 		int index =hashCode(element);                 						 //enligt "add" algoritmen
 		while(nodeArray[index] != null) {
-			if(nodeArray[index].element != element) {
+			if(!nodeArray[index].element.equals(element)) {
 				index++;
+				if(index>=sizeOfArray){
+					index%=sizeOfArray;
+				}
+				
 			}
-			else {break;}
+			else {
+				
+				break;
+				}
 		}
 		return nodeArray[index];
 	}
@@ -100,7 +111,6 @@ public class HashTableClass {
 		return sizeOfArray;
 	}
 
-	
 
 }
 
