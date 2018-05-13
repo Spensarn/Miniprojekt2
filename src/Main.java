@@ -19,13 +19,13 @@ public class Main {
 			}
 		});
 	}
-	//Creates HashTableClass of identifiers from file fil
+	/**Returns HashTableClass of identifiers from file fil if file not found then returns null*/
 	public static HashTableClass readFile(String fil){
 		FileReader a = null;
 		try{
 			a = new FileReader(new File(fil));
 		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
+			return null;
 		}
 		HashTableClass keyWords = keyWords();
 
@@ -62,7 +62,7 @@ public class Main {
 		idWordsHash.add(idWords);
 		return idWordsHash;
 	}
-	//Create a HashTableClass of KeyWords.txt
+	/**Create a HashTableClass of KeyWords.txt*/
 	private static HashTableClass keyWords() {
 		String line = "";
 		try {

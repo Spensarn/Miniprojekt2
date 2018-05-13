@@ -1,19 +1,20 @@
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Label;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
-import java.awt.GridLayout;
-import java.awt.Label;
 import javax.swing.JButton;
+
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 
 public class GUI extends JFrame {
 
@@ -62,6 +63,7 @@ public class GUI extends JFrame {
 		JLabel lblTwoFilePaths = new JLabel("Input two file with their paths");
 		contentPane.add(lblTwoFilePaths, "1, 1, 3, 1, center, center");
 		
+		
 		txtFile = new JTextField();
 		txtFile.setText("Path for 1st file");
 		contentPane.add(txtFile, "1, 2, 3, 1, fill, fill");
@@ -75,19 +77,24 @@ public class GUI extends JFrame {
 		btnCheck = new JButton("Check");
 		contentPane.add(btnCheck, "2, 4, fill, fill");
 		
+		lblResult = new Label((String) null);
+		lblResult.setAlignment(Label.CENTER);
+		lblResult.setFont(new Font("Dialog", Font.PLAIN, 35));
+		contentPane.add(lblResult, "1, 5, 3, 1, fill, fill");
+		
 		btnCheck.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				String input1 = txtFile.getText();
 				String input2 = txtFileTwo.getText();
 				
-				HashTableClass file1HashTable = Main.readFile(input1);
-				HashTableClass file2HashTable = Main.readFile(input2);
-				String result = String.valueOf(Main.compareHash(file1HashTable, file2HashTable));
-				lblResult.setText(result);
+				if(Main.readFile(input1) != null && Main.readFile(input2) != null) {
+					HashTableClass file1HashTable = Main.readFile(input1);
+					HashTableClass file2HashTable = Main.readFile(input2);
+					String result = String.valueOf(Main.compareHash(file1HashTable, file2HashTable));
+					lblResult.setText("Same identifiers: " + result + "%");
+				}
+				else {lblResult.setText("File not found");}
 			}
 		});
-		
-		lblResult = new Label("New label");
-		contentPane.add(lblResult, "1, 5, 3, 1, center, center");
 	}
 }
