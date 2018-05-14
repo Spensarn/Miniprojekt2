@@ -14,7 +14,6 @@ public class MainTest {
 		keyWords = Main.keyWords();
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Test
 	public void testCompareHash() {
 		String[] arrayA = {"Hej", "Spens", "filip", "korv", "fil"}; 
@@ -29,6 +28,7 @@ public class MainTest {
 	    
 	    assertEquals("Tests if the method returns the correct value", 36.4, result, 0.1); //(11 - 7) / 11 = 36.4
 	}
+	
 	@Test
 	public void testReadFile(){
 		String[] arrayOfTesttxt = {"Spens", "heter", "han"};
