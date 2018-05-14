@@ -20,7 +20,7 @@ public class Main {
 			}
 		});
 	}
-	
+
 	/**
 	 * Returns HashTableClass of identifiers from a file if file not found then returns null
 	 * The fil argument is the complete path to the file
@@ -41,14 +41,17 @@ public class Main {
 		try { //Read file
 			BufferedReader read = new BufferedReader(a);
 			while(read.ready()){
-				line += read.readLine();
+				line += read.readLine() + " ";
 			}
-			line.trim();
+			//line.trim();
 			read.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		String[] words = line.split("\\W+"); //Split by symbols (whitespace, {, ], etc.)
+		for(int i = 0; i < words.length; i++){
+			words[i] = words[i].trim();
+		}
 		for(String word : words){//Loop counting how many words are identifiers
 			if(!Arrays.asList(keyWords).contains(word) && !isNumeric(word)){
 				idCount++;
@@ -63,7 +66,7 @@ public class Main {
 				i++;
 			}				
 		}
-
+		System.out.println(Arrays.toString(idWords));
 		HashTableClass idWordsHash = new HashTableClass(idCount);
 		idWordsHash.add(idWords);
 		return idWordsHash;
@@ -89,33 +92,50 @@ public class Main {
 		String[] keyWords = line.split(" ");
 		return keyWords;
 	}
-	
+
 	/**Returns a percentage of how closely the files resemble each other*/
+	/**
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public static double compareHash(HashTableClass a, HashTableClass b){
 		double counterTotalWords = (a.size() + b.size()) / 3; //Total nodes divided by three because of the add-function
 		double ret = 0; //Final return-value
 
-		int identifiers = 0; //Number of unique identifiers of the total number of identifiers in the two files
+		int sameWords = 0; //Number of unique identifiers of the total number of identifiers in the two files
 
 		//
 		for(int i = 0; i < a.size(); i++){
-			if(a.nodeArray[i] != null && b.contains(a.nodeArray[i].element) == null){
-				System.out.println("a: "+ a.nodeArray[i].element);
-				identifiers++;
+			if(a.nodeArray[i] != null && b.contains(a.nodeArray[i].element) != null){
+				//System.out.println("a: "+ a.nodeArray[i].element);
+				if(a.nodeArray[i].frequency < b.contains(a.nodeArray[i].element).frequency){
+					sameWords += a.nodeArray[i].frequency; 
+					System.out.println("Same words: "+ a.nodeArray[i].element);
+				}
+				else{
+					sameWords += b.nodeArray[i].frequency; 
+				}
+				
 			}
 		}
 
-		for(int j = 0; j < b.size(); j++){
-			if(b.nodeArray[j] != null && a.contains(b.nodeArray[j].element) == null){
-				System.out.println("b: "+ b.nodeArray[j].element);
-				identifiers++;
-			}			
-		}
-		
-		System.out.println("Total words in file: " + counterTotalWords);
-		System.out.println("Unique words in file: " + identifiers);
+//		for(int j = 0; j < b.size(); j++){
+//			if(b.nodeArray[j] != null && a.contains(b.nodeArray[j].element) == null){
+//				//System.out.println("b: "+ b.nodeArray[j].element);
+//				wordsThatExistInBothFiles++;
+//			}
+//			else{
+//				if(b.nodeArray[j] != null){
+//					System.out.println("b: "+ b.nodeArray[j].element);
+//				}
+//			}
+//		}
 
-		ret = (double) Math.round(((counterTotalWords - identifiers) / counterTotalWords * 100) * 10) / 10;
+		System.out.println("Total words in files: " + counterTotalWords);
+		System.out.println("Unique words in files: " + sameWords);
+
+		ret = (double) Math.round((sameWords / (counterTotalWords - sameWords) * 100) * 10) / 10;
 
 		return ret;
 	}
