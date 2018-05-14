@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-//Metoder: readFiles(File a, File b), compareHash(HashTableClass a, HashTableClass b), print()
+import java.util.Arrays;
+//Metoder: readFiles(File a, File b), compareHash(HashTableClass a, HashTableClass b), keyWords(), isNumeric();
 
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
@@ -19,7 +20,13 @@ public class Main {
 			}
 		});
 	}
-	/**Returns HashTableClass of identifiers from file fil if file not found then returns null*/
+	
+	/**
+	 * Returns HashTableClass of identifiers from a file if file not found then returns null
+	 * The fil argument is the complete path to the file
+	 * @param fil the path to a file
+	 * @return    a hashtable of identifiers
+	 */
 	public static HashTableClass readFile(String fil){
 		FileReader a = null;
 		try{
@@ -27,11 +34,11 @@ public class Main {
 		} catch (FileNotFoundException e1) {
 			return null;
 		}
-		HashTableClass keyWords = keyWords();
+		String[] keyWords = keyWords();
 
 		int idCount = 0;
 		String line = "";
-		try {
+		try { //Read file
 			BufferedReader read = new BufferedReader(a);
 			while(read.ready()){
 				line += read.readLine();
@@ -41,18 +48,17 @@ public class Main {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
 		String[] words = line.split("\\W+"); //Split by symbols (whitespace, {, ], etc.)
 		for(String word : words){//Loop counting how many words are identifiers
-			word.trim();
-			if(keyWords.contains(word)==null && !isNumeric(word)){
+			if(!Arrays.asList(keyWords).contains(word) && !isNumeric(word)){
 				idCount++;
-			}				
+			}	
 		}
 		String[] idWords = new String [idCount];
 		int i = 0;
 		for(String word : words){//Loop adding identifiers to array
-			if(keyWords.contains(word)==null && !isNumeric(word)){
+			//If a word is neither a keyword nor a number add it to the array
+			if(!Arrays.asList(keyWords).contains(word) && !isNumeric(word)){
 				idWords[i] = word;
 				i++;
 			}				
@@ -62,10 +68,14 @@ public class Main {
 		idWordsHash.add(idWords);
 		return idWordsHash;
 	}
-	/**Create a HashTableClass of KeyWords.txt*/
-	private static HashTableClass keyWords() {
+
+	/**
+	 * Create a String[] of KeyWords.txt
+	 * @return  a array of strings containing keywords
+	 */
+	public static String[] keyWords() {
 		String line = "";
-		try {
+		try {//Read KeyWords.txt
 			BufferedReader read = new BufferedReader(new FileReader("KeyWords.txt"));
 			while(read.ready()){
 				line += read.readLine();
@@ -77,11 +87,7 @@ public class Main {
 		}
 
 		String[] keyWords = line.split(" ");
-
-		HashTableClass keyWordHash = new HashTableClass(keyWords.length);
-		keyWordHash.add(keyWords);
-
-		return keyWordHash;
+		return keyWords;
 	}
 	
 	/**Returns a percentage of how closely the files resemble each other*/
@@ -114,7 +120,11 @@ public class Main {
 		return ret;
 	}
 
-	//Check if String is a number
+	/**
+	 * Check if String is a number
+	 * @param str  a string to check if it's a number
+	 * @return     true or false if str is a number or not
+	 */
 	public static boolean isNumeric(String str){
 		return str.matches("-?\\d+(\\.\\d+)?"); 
 	}

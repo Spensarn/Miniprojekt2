@@ -1,11 +1,4 @@
-import java.io.*;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Arrays;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 
 //Spara alla java nyckelord i en hashtabell
@@ -50,17 +43,6 @@ public class HashTableClass {
 			}
 
 		}
-		/*int counter=0;
-		for(int i = 0; i<nodeArray.length; i++) {
-			if(nodeArray[i]!=null) {
-				counter++;                                                  //r�knar hur m�nga noder som �r upptagna
-			}
-		}
-		loadFactor = counter/totalWords;                                    //loadFactor: antal upptagna noder/totala antalet noder
-		if(loadFactor >= 0.5) {                                             //om h�lften eller fler av noderna �r upptagna, dubbla storleken p� hashtabellen f�r att unvika kollision
-			doubleTable();
-		}
-		*/
 	}
 
 	public Node contains(String element) {                                  //kollar om ett element finns i hashtabellen och returnerar dess nod
@@ -74,7 +56,6 @@ public class HashTableClass {
 				
 			}
 			else {
-				
 				break;
 				}
 		}
