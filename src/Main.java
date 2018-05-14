@@ -120,18 +120,6 @@ public class Main {
 			}
 		}
 
-//		for(int j = 0; j < b.size(); j++){
-//			if(b.nodeArray[j] != null && a.contains(b.nodeArray[j].element) == null){
-//				//System.out.println("b: "+ b.nodeArray[j].element);
-//				wordsThatExistInBothFiles++;
-//			}
-//			else{
-//				if(b.nodeArray[j] != null){
-//					System.out.println("b: "+ b.nodeArray[j].element);
-//				}
-//			}
-//		}
-
 		System.out.println("Total words in files: " + counterTotalWords);
 		System.out.println("Unique words in files: " + sameWords);
 
