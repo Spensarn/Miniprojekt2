@@ -28,7 +28,7 @@ public class MainTest {
 	    
 	    double result = Main.compareHash(tableA, tableB);
 	    
-	    assertEquals("Tests if the method returns the correct value", 36.4, result, 0.1); //(11 - 7) / 11 = 36.4
+	    assertEquals("Tests if the method returns the correct value", 22.2, result, 0.1); //(11 - 7) / 11 = 36.4
 	}
 	
 	@Test
