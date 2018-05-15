@@ -5,12 +5,22 @@ import java.util.Arrays;
 //Spara varje unik identifierare i en annan hashtabell
 
 //Metoder: get(int),size(),put(int, string), hashcode(), contains()
+
+/** Our custom-made HashTableClass that fits the purpose of the assignment with its necessary methods to make it work
+ * @author leif9
+ */
 public class HashTableClass {
 
 	Node[] nodeArray;                  //array av noder, som inneh�ller "element"; allts� ett ord och "frequency"; allts� hur ofta ordet f�rekommer
 	int sizeOfArray;                   //storleken av hashtabellen (hur m�nga noder den inneh�ller)          
 	public int totalWords;             //totala antalet ord i filen
 
+	
+	/** The construct
+	 *  Receives the size of the array
+	 *  Multiplies it by 3 and makes a HashTableClass out of it
+	 * @param Input : (array).length
+	 */
 	HashTableClass(int size){          //konstruktorn
 		sizeOfArray = size*3;
 		nodeArray = new Node[sizeOfArray];    
@@ -19,7 +29,11 @@ public class HashTableClass {
 			throw new RuntimeException("ERROR" + size);          //om storleken s�tts till 0 eller mindre: error
 		}
 	}
-
+	
+	/** Pushes all words from a String-array into a HashTableClass
+	 *  Variable loadFactor is unused due to all words will be put in simultaneously
+	 * @param Input: a String-array containing all the words from a file
+	 */
 	public void add(String[] elementsInArray) {         //VIKTIG add funktion
 		totalWords = elementsInArray.length;				//totalWords = alla element/strängar som finns i filen
 		float loadFactor;                               //antal anv�nda noder/alla noder  
@@ -44,7 +58,12 @@ public class HashTableClass {
 
 		}
 	}
-
+	
+	/** Checks if a HashTableClass contains a node with the element equal to the input
+	 *  If it doesn't find it at the appropriate hash-code it will check some steps further until an empty node is found
+	 * @param Input : A word that is searched for
+	 * @return Returns the node in which the element input was found
+	 */
 	public Node contains(String element) {                                  //kollar om ett element finns i hashtabellen och returnerar dess nod
 		int index =hashCode(element);                 						 //enligt "add" algoritmen
 		while(nodeArray[index] != null) {
@@ -61,15 +80,13 @@ public class HashTableClass {
 		}
 		return nodeArray[index];
 	}
-
-	public void doubleTable() {
-		Node[] temp = new Node[nodeArray.length*3]; 
-		System.arraycopy( nodeArray, 0, temp, 0, nodeArray.length);
-		nodeArray = new Node[temp.length];
-		System.arraycopy(temp, 0, nodeArray, 0, temp.length);
-		sizeOfArray = nodeArray.length;
-	}
-
+	
+	
+	/** Receives a word in form of a String and calculates the hash-code for it
+	 *  Splits the word into a char-array then adds all ascii values for each character
+	 * @param Input : a word (String)
+	 * @return Returns the ascii values modulus the size of the array to avoid out of bound errors
+	 */
 	public int hashCode(String word) {
 		char[] array = word.toCharArray();
 		int ascii=0;
@@ -78,7 +95,9 @@ public class HashTableClass {
 		}
 		return ascii%sizeOfArray;
 	}
-
+	
+	/** Prints each element in the HashTableClass in question, can also represent an iterator
+	 */
 	public void printTable() {
 		System.out.println("Elements  "   + "Frequency   " + "HashCode   ");
 		for(int i=0; i<nodeArray.length; i++) {
@@ -87,7 +106,10 @@ public class HashTableClass {
 			}
 		}
 	}
-
+	
+	/** A method made for the method hashCode and the class Main, used to check what size the HashTableClass has (how many nodes it has got)
+	 * @return Returns the value of sizeOfArray
+	 */
 	public int size() {
 		return sizeOfArray;
 	}
@@ -95,6 +117,10 @@ public class HashTableClass {
 
 }
 
+/** A class which uses unlinked nodes
+ *  A node includes the word (String) and its frequency (int)
+ * @author leif9
+ */
 class Node{                                                                 //v�r skr�ddarsydda nod-klass
 	public String element;                                           //elementet �r ett ord
 	public int frequency = 0;                                               //frekvensen �r hur ofta det f�rekommer
