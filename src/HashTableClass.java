@@ -115,7 +115,7 @@ public class HashTableClass implements Iterable<Node>{
 		return sizeOfArray;
 	}
 	/**A Iterator for HashTableClass.
-	 * @return Returns a iterator of type Node,
+	 * @return Returns a iterator of type Node.
 	 */
 	@Override
 	public Iterator<Node> iterator(){
@@ -124,14 +124,16 @@ public class HashTableClass implements Iterable<Node>{
 			private int currentIndex;
 
 			@Override
-			/**
-			 * @return Returns true or false if the hashtable has another node
+			/**Method to see if the iterator has a next value.
+			 * @return Returns true or false if the hashtable has another node.
 			 */
 			public boolean hasNext() {
 				// TODO Auto-generated method stub
 				return currentIndex < sizeOfArray;
 			}
-
+			/**Method for getting the next node.
+			 * @return returns a Node in the Hashtable.
+			 */
 			@Override
 			public Node next() {
 				return nodeArray[currentIndex++];

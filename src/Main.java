@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 //Metoder: readFiles(File a, File b), compareHash(HashTableClass a, HashTableClass b), keyWords(), isNumeric();
 /**
- * A plagiarism checker which uses hashtable and a GUI
+ * A plagiarism checker which uses hashtable and a GUI.
  * @author E. Lidbeck<br> M. Månsson  
  *
  */
@@ -27,9 +27,9 @@ public class Main {
 
 	/**
 	 * Returns Hashtable of identifiers from a file if file not found then returns null.
-	 * The fil argument is the complete path to the file
-	 * @param fil Path to a file
-	 * @return    Hashtable of identifiers
+	 * The fil argument is the complete path to the file.
+	 * @param fil Path to a file.
+	 * @return    Hashtable of identifiers.
 	 */
 	public static HashTableClass readFile(String fil){
 		FileReader a = null;
@@ -77,8 +77,8 @@ public class Main {
 	}
 
 	/**
-	 * Create String[] of KeyWords.txt
-	 * @return  String[] containing keywords
+	 * Create String[] of KeyWords.txt.
+	 * @return  String[] containing keywords.
 	 */
 	public static HashTableClass keyWords() {
 		String line = "";
@@ -100,10 +100,10 @@ public class Main {
 	}
 
 	/**
-	 * Returns a percentage of how closely the files resemble each other
-	 * @param a Hashtable which we will compare with b
-	 * @param b Hashtable which we will compare with a
-	 * @return  Percentage of same identifiers
+	 * Returns a percentage of how closely the files resemble each other.
+	 * @param a Hashtable which we will compare with b.
+	 * @param b Hashtable which we will compare with a.
+	 * @return  Percentage of same identifiers.
 	 */
 	public static double compareHash(HashTableClass a, HashTableClass b){
 		double counterTotalWords = (a.size() + b.size()) / 3; //Total nodes divided by three because of the add-function
@@ -134,9 +134,9 @@ public class Main {
 	}
 
 	/**
-	 * Check if String is a number
-	 * @param str  String to see if it's a number
-	 * @return     true or false if str is a number or not
+	 * Check if String is a number.
+	 * @param str  String to see if it's a number.
+	 * @return     true or false if str is a number or not.
 	 */
 	public static boolean isNumeric(String str){
 		return str.matches("-?\\d+(\\.\\d+)?"); 
