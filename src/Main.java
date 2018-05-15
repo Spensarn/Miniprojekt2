@@ -38,7 +38,7 @@ public class Main {
 		} catch (FileNotFoundException e1) {
 			return null;
 		}
-		String[] keyWords = keyWords();
+		HashTableClass keyWords = keyWords();
 
 		int idCount = 0;
 		String line = "";
@@ -57,7 +57,7 @@ public class Main {
 			words[i] = words[i].trim();
 		}
 		for(String word : words){//Loop counting how many words are identifiers
-			if(!Arrays.asList(keyWords).contains(word) && !isNumeric(word)){
+			if(keyWords.contains(word) == null && !isNumeric(word)){
 				idCount++;
 			}	
 		}
@@ -65,7 +65,7 @@ public class Main {
 		int i = 0;
 		for(String word : words){//Loop adding identifiers to array
 			//If a word is neither a keyword nor a number add it to the array
-			if(!Arrays.asList(keyWords).contains(word) && !isNumeric(word)){
+			if(keyWords.contains(word) == null && !isNumeric(word)){
 				idWords[i] = word;
 				i++;
 			}				
@@ -80,7 +80,7 @@ public class Main {
 	 * Create String[] of KeyWords.txt
 	 * @return  String[] containing keywords
 	 */
-	public static String[] keyWords() {
+	public static HashTableClass keyWords() {
 		String line = "";
 		try {//Read KeyWords.txt
 			BufferedReader read = new BufferedReader(new FileReader("KeyWords.txt"));
@@ -94,7 +94,9 @@ public class Main {
 		}
 
 		String[] keyWords = line.split(" ");
-		return keyWords;
+		HashTableClass keyWordsHash = new HashTableClass(keyWords.length);
+		keyWordsHash.add(keyWords);
+		return keyWordsHash;
 	}
 
 	/**
