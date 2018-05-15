@@ -32,9 +32,9 @@ public class MainTest {
 	@Test
 	public void testReadFile(){
 		String[] arrayOfTesttxt = {"Spens", "heter", "han"};
-		boolean same = false;
+		boolean same = true;
 		for(String word : arrayOfTesttxt){
-			if(Testtxt.contains(word)!= null){
+			if(Testtxt.contains(word)== null){
 				same = true;
 			}
 		}

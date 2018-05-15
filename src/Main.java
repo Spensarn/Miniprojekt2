@@ -6,7 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 //Metoder: readFiles(File a, File b), compareHash(HashTableClass a, HashTableClass b), keyWords(), isNumeric();
-
+/**
+ * A plagiarism checker which uses hashtable and a GUI
+ * @author E. Lidbeck<br> M. Månsson  
+ *
+ */
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
 		EventQueue.invokeLater(new Runnable() {
@@ -22,10 +26,10 @@ public class Main {
 	}
 
 	/**
-	 * Returns HashTableClass of identifiers from a file if file not found then returns null
+	 * Returns Hashtable of identifiers from a file if file not found then returns null.
 	 * The fil argument is the complete path to the file
-	 * @param fil the path to a file
-	 * @return    a hashtable of identifiers
+	 * @param fil Path to a file
+	 * @return    Hashtable of identifiers
 	 */
 	public static HashTableClass readFile(String fil){
 		FileReader a = null;
@@ -73,8 +77,8 @@ public class Main {
 	}
 
 	/**
-	 * Create a String[] of KeyWords.txt
-	 * @return  a array of strings containing keywords
+	 * Create String[] of KeyWords.txt
+	 * @return  String[] containing keywords
 	 */
 	public static String[] keyWords() {
 		String line = "";
@@ -93,11 +97,11 @@ public class Main {
 		return keyWords;
 	}
 
-	/**Returns a percentage of how closely the files resemble each other*/
 	/**
-	 * @param a
-	 * @param b
-	 * @return
+	 * Returns a percentage of how closely the files resemble each other
+	 * @param a Hashtable which we will compare with b
+	 * @param b Hashtable which we will compare with a
+	 * @return  Percentage of same identifiers
 	 */
 	public static double compareHash(HashTableClass a, HashTableClass b){
 		double counterTotalWords = (a.size() + b.size()) / 3; //Total nodes divided by three because of the add-function
@@ -105,7 +109,6 @@ public class Main {
 
 		int sameWords = 0; //Number of unique identifiers of the total number of identifiers in the two files
 
-		//
 		for(int i = 0; i < a.size(); i++){
 			if(a.nodeArray[i] != null && b.contains(a.nodeArray[i].element) != null){
 				//System.out.println("a: "+ a.nodeArray[i].element);
@@ -130,7 +133,7 @@ public class Main {
 
 	/**
 	 * Check if String is a number
-	 * @param str  a string to check if it's a number
+	 * @param str  String to see if it's a number
 	 * @return     true or false if str is a number or not
 	 */
 	public static boolean isNumeric(String str){

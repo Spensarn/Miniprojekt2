@@ -16,32 +16,22 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
 
+/**
+ * A Graphical User Interface for the plagiarism checker
+ * @author Erik L
+ *
+ */
 public class GUI extends JFrame {
 
-	private JPanel contentPane;
-	private JTextField txtFileTwo;
-	private JTextField txtFile;
-	private Label lblResult;
-	private JButton btnCheck;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUI frame = new GUI();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JPanel 		contentPane;
+	private JTextField 	txtFileTwo;
+	private JTextField 	txtFile;
+	private Label 		lblResult;
+	private JButton 	btnCheck;
 
 	/**
 	 * Create the frame.
+	 * 
 	 */
 	public GUI() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
