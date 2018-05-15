@@ -8,8 +8,7 @@ import java.util.Arrays;
 //Metoder: readFiles(File a, File b), compareHash(HashTableClass a, HashTableClass b), keyWords(), isNumeric();
 /**
  * A plagiarism checker which uses hashtable and a GUI
- * @author E. Lidbeck<br> M. Månsson  
- *
+ * @author E. Lidbeck<br> M. Mï¿½nsson   *
  */
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
@@ -70,7 +69,7 @@ public class Main {
 				i++;
 			}				
 		}
-		System.out.println(Arrays.toString(idWords));
+		
 		HashTableClass idWordsHash = new HashTableClass(idCount);
 		idWordsHash.add(idWords);
 		return idWordsHash;
@@ -114,17 +113,12 @@ public class Main {
 				//System.out.println("a: "+ a.nodeArray[i].element);
 				if(a.nodeArray[i].frequency < b.contains(a.nodeArray[i].element).frequency){
 					sameWords += a.nodeArray[i].frequency; 
-					System.out.println("Same words: "+ a.nodeArray[i].element);
 				}
 				else{
 					sameWords += b.nodeArray[i].frequency; 
 				}
-				
 			}
 		}
-
-		System.out.println("Total words in files: " + counterTotalWords);
-		System.out.println("Unique words in files: " + sameWords);
 
 		ret = (double) Math.round((sameWords / (counterTotalWords - sameWords) * 100) * 10) / 10;
 
