@@ -8,7 +8,8 @@ import java.util.Iterator;
 //Metoder: get(int),size(),put(int, string), hashcode(), contains()
 
 /** Our custom-made HashTableClass that fits the purpose of the assignment with its necessary methods to make it work
- * @author leif9
+ * @author Leif Sulaiman
+ * @author Jacob Spens
  */
 public class HashTableClass implements Iterable<Node>{
 
