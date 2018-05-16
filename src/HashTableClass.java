@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Iterator;
 
 
 //Spara alla java nyckelord i en hashtabell
@@ -9,7 +10,7 @@ import java.util.Arrays;
 /** Our custom-made HashTableClass that fits the purpose of the assignment with its necessary methods to make it work
  * @author leif9
  */
-public class HashTableClass {
+public class HashTableClass implements Iterable<Node>{
 
 	Node[] nodeArray;                  //array av noder, som inneh�ller "element"; allts� ett ord och "frequency"; allts� hur ofta ordet f�rekommer
 	int sizeOfArray;                   //storleken av hashtabellen (hur m�nga noder den inneh�ller)          
@@ -113,8 +114,37 @@ public class HashTableClass {
 	public int size() {
 		return sizeOfArray;
 	}
+	/**A Iterator for HashTableClass.
+	 * @return Returns a iterator of type Node.
+	 */
+	@Override
+	public Iterator<Node> iterator(){
+		Iterator<Node> it = new Iterator<Node>(){
+			
+			private int currentIndex;
 
+			@Override
+			/**Method to see if the iterator has a next value.
+			 * @return Returns true or false if the hashtable has another node.
+			 */
+			public boolean hasNext() {
+				// TODO Auto-generated method stub
+				return currentIndex < sizeOfArray;
+			}
+			/**Method for getting the next node.
+			 * @return returns a Node in the Hashtable.
+			 */
+			@Override
+			public Node next() {
+				return nodeArray[currentIndex++];
+			}
 
+			@Override
+			public void remove() {
+			}
+		};
+		return it;
+	}
 }
 
 /** A class which uses unlinked nodes

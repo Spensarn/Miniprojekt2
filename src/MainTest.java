@@ -1,12 +1,14 @@
 import static org.junit.Assert.*;
 
+import java.util.Iterator;
+
 import org.junit.Before;
 import org.junit.Test;
 
 public class MainTest {
 	HashTableClass Testtxt;
 	HashTableClass Test2txt;
-	String[] keyWords;
+	HashTableClass keyWords;
 	@Before
 	public void setUp() throws Exception{
 		Testtxt = Main.readFile("Test.txt");
@@ -34,7 +36,7 @@ public class MainTest {
 		String[] arrayOfTesttxt = {"Spens", "heter", "han"};
 		boolean same = true;
 		for(String word : arrayOfTesttxt){
-			if(Testtxt.contains(word)== null){
+			if(Testtxt.contains(word) == null){
 				same = true;
 			}
 		}
@@ -42,9 +44,13 @@ public class MainTest {
 		
 		assertEquals("Tests if readFile() returns null if file not found", null, Main.readFile("nonExistingFile.txt"));
 		boolean containsKey = false;
-		for(String keyWord : keyWords){
-			if(Test2txt.contains(keyWord)!=null){
-				containsKey = true;
+		Iterator<Node> it = keyWords.iterator();
+		while(it.hasNext()){
+			Node name = it.next();
+			if(name != null){
+				if(Test2txt.contains(name.element) != null){
+					containsKey = true;
+				}
 			}
 		}
 		assertEquals("Tests if hashtable of a file(containing keywords) doesn't contain keywords", false, containsKey);

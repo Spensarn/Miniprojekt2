@@ -26,9 +26,9 @@ public class Main {
 
 	/**
 	 * Returns Hashtable of identifiers from a file if file not found then returns null.
-	 * The fil argument is the complete path to the file
-	 * @param fil Path to a file
-	 * @return    Hashtable of identifiers
+	 * The fil argument is the complete path to the file.
+	 * @param fil Path to a file.
+	 * @return    Hashtable of identifiers.
 	 */
 	public static HashTableClass readFile(String fil){
 		FileReader a = null;
@@ -37,7 +37,7 @@ public class Main {
 		} catch (FileNotFoundException e1) {
 			return null;
 		}
-		String[] keyWords = keyWords();
+		HashTableClass keyWords = keyWords();
 
 		int idCount = 0;
 		String line = "";
@@ -56,7 +56,7 @@ public class Main {
 			words[i] = words[i].trim();
 		}
 		for(String word : words){//Loop counting how many words are identifiers
-			if(!Arrays.asList(keyWords).contains(word) && !isNumeric(word)){
+			if(keyWords.contains(word) == null && !isNumeric(word)){
 				idCount++;
 			}	
 		}
@@ -64,7 +64,7 @@ public class Main {
 		int i = 0;
 		for(String word : words){//Loop adding identifiers to array
 			//If a word is neither a keyword nor a number add it to the array
-			if(!Arrays.asList(keyWords).contains(word) && !isNumeric(word)){
+			if(keyWords.contains(word) == null && !isNumeric(word)){
 				idWords[i] = word;
 				i++;
 			}				
@@ -76,10 +76,10 @@ public class Main {
 	}
 
 	/**
-	 * Create String[] of KeyWords.txt
-	 * @return  String[] containing keywords
+	 * Create String[] of KeyWords.txt.
+	 * @return  String[] containing keywords.
 	 */
-	public static String[] keyWords() {
+	public static HashTableClass keyWords() {
 		String line = "";
 		try {//Read KeyWords.txt
 			BufferedReader read = new BufferedReader(new FileReader("KeyWords.txt"));
@@ -93,14 +93,16 @@ public class Main {
 		}
 
 		String[] keyWords = line.split(" ");
-		return keyWords;
+		HashTableClass keyWordsHash = new HashTableClass(keyWords.length);
+		keyWordsHash.add(keyWords);
+		return keyWordsHash;
 	}
 
 	/**
-	 * Returns a percentage of how closely the files resemble each other
-	 * @param a Hashtable which we will compare with b
-	 * @param b Hashtable which we will compare with a
-	 * @return  Percentage of same identifiers
+	 * Returns a percentage of how closely the files resemble each other.
+	 * @param a Hashtable which we will compare with b.
+	 * @param b Hashtable which we will compare with a.
+	 * @return  Percentage of same identifiers.
 	 */
 	public static double compareHash(HashTableClass a, HashTableClass b){
 		double counterTotalWords = (a.size() + b.size()) / 3; //Total nodes divided by three because of the add-function
@@ -126,9 +128,9 @@ public class Main {
 	}
 
 	/**
-	 * Check if String is a number
-	 * @param str  String to see if it's a number
-	 * @return     true or false if str is a number or not
+	 * Check if String is a number.
+	 * @param str  String to see if it's a number.
+	 * @return     true or false if str is a number or not.
 	 */
 	public static boolean isNumeric(String str){
 		return str.matches("-?\\d+(\\.\\d+)?"); 
