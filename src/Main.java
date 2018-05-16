@@ -108,21 +108,26 @@ public class Main {
 		double counterTotalWords = (a.size() + b.size()) / 3; //Total nodes divided by three because of the add-function
 		double ret = 0; //Final return-value
 
-		int sameWords = 0; //Number of unique identifiers of the total number of identifiers in the two files
+		double sameWords = 0; //Number of unique identifiers of the total number of identifiers in the two files
 
 		for(int i = 0; i < a.size(); i++){
 			if(a.nodeArray[i] != null && b.contains(a.nodeArray[i].element) != null){
 				//System.out.println("a: "+ a.nodeArray[i].element);
-				if(a.nodeArray[i].frequency < b.contains(a.nodeArray[i].element).frequency){
-					sameWords += a.nodeArray[i].frequency; 
-				}
-				else{
-					sameWords += b.nodeArray[i].frequency; 
-				}
+//				if(a.nodeArray[i].frequency < b.contains(a.nodeArray[i].element).frequency){
+//					sameWords += a.nodeArray[i].frequency; 
+//				}
+//				else{
+//					sameWords += b.contains(a.nodeArray[i].element).frequency; 
+//				}
+				sameWords += a.nodeArray[i].frequency;
+				//System.out.println("Freq a: " + sameWords);
+				sameWords += b.contains(a.nodeArray[i].element).frequency;
+				//System.out.println("Total Freq: " + sameWords);
 			}
 		}
 
-		ret = (double) Math.round((sameWords / (counterTotalWords - sameWords) * 100) * 10) / 10;
+		System.out.println("Total Freq: " + sameWords);
+		ret = (double) Math.round((sameWords / (counterTotalWords) * 100) * 10) / 10;
 
 		return ret;
 	}
