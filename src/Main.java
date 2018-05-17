@@ -112,21 +112,11 @@ public class Main {
 
 		for(int i = 0; i < a.size(); i++){
 			if(a.nodeArray[i] != null && b.contains(a.nodeArray[i].element) != null){
-				//System.out.println("a: "+ a.nodeArray[i].element);
-//				if(a.nodeArray[i].frequency < b.contains(a.nodeArray[i].element).frequency){
-//					sameWords += a.nodeArray[i].frequency; 
-//				}
-//				else{
-//					sameWords += b.contains(a.nodeArray[i].element).frequency; 
-//				}
 				sameWords += a.nodeArray[i].frequency;
-				//System.out.println("Freq a: " + sameWords);
 				sameWords += b.contains(a.nodeArray[i].element).frequency;
-				//System.out.println("Total Freq: " + sameWords);
 			}
 		}
 
-		System.out.println("Total Freq: " + sameWords);
 		ret = (double) Math.round((sameWords / (counterTotalWords) * 100) * 10) / 10;
 
 		return ret;
